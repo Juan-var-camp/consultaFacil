@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function Header(){
     return(
         
@@ -8,9 +10,9 @@ function Header(){
 
 
             <div className=" flex gap-8 text-gray-500">
-                <a>Inicio</a>
-                <a>Buscar</a>
-                <a>Iniciar Sesion</a>
+                <Link to={"/"}>Inicio</Link>
+                <Link to={"/buscar"}>Buscar</Link>
+                <Link to={"/login"}>Iniciar Sesion</Link>
             </div>
                 
         </nav>
