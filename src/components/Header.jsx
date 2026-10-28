@@ -7,8 +7,6 @@ function Header(){
             <h1>
                 Consulta Facil
             </h1>
-
-
             <div className=" flex gap-8 text-gray-500">
                 <Link to={"/"}>Inicio</Link>
                 <Link to={"/buscar"}>Buscar</Link>

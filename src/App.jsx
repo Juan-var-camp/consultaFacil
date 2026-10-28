@@ -17,8 +17,6 @@ function App() {
         <Route path="/buscar" element={<Buscar/>}/>
         <Route path="/login" element={<Login/>}/>
       </Routes>
-
-      
       
     </div>
 
