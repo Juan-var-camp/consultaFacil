@@ -1,1 +1,117 @@
 @import "tailwindcss";
+
+/* Permite usar dark:... si algún día lo necesitas; el tema ya cambia con variables */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tema claro (por defecto) */
+:root {
+  --c-fondo: #F4F7F5;
+  --c-superficie: #FFFFFF;
+  --c-tinta: #12201D;
+  --c-tinta-suave: #4A5B57;
+  --c-borde: #D5DEDA;
+  --c-borde-fuerte: #7C8C87;
+
+  --c-primario: #0F5C4D;
+  --c-primario-hover: #0B4A3E;
+  --c-primario-active: #083A31;
+  --c-primario-suave: #E3F0EC;
+  --c-sobre-primario: #FFFFFF;
+
+  --c-acento: #F0B429;
+  --c-acento-suave: #FBEFC9;
+  --c-sobre-acento: #12201D;
+
+  --c-peligro: #B42318;
+  --c-peligro-suave: #FEF3F2;
+  --c-sobre-peligro: #FFFFFF;
+
+  color-scheme: light;
+}
+
+/* Tema oscuro: mismos nombres, otros valores */
+.dark {
+  --c-fondo: #0E1514;
+  --c-superficie: #151F1D;
+  --c-tinta: #E8EFEC;
+  --c-tinta-suave: #A3B4AF;
+  --c-borde: #26332F;
+  --c-borde-fuerte: #6B7F79;
+
+  --c-primario: #5CC9A7;
+  --c-primario-hover: #7AD6B9;
+  --c-primario-active: #46B391;
+  --c-primario-suave: #17332D;
+  --c-sobre-primario: #0A1F1A;
+
+  --c-acento: #F0B429;
+  --c-acento-suave: #3A3012;
+  --c-sobre-acento: #12201D;
+
+  --c-peligro: #F28B82;
+  --c-peligro-suave: #3A1B19;
+  --c-sobre-peligro: #2B0B09;
+
+  color-scheme: dark;
+}
+
+/* Registra los tokens como utilidades: bg-fondo, text-tinta, rounded-control... */
+@theme inline {
+  --color-fondo: var(--c-fondo);
+  --color-superficie: var(--c-superficie);
+  --color-tinta: var(--c-tinta);
+  --color-tinta-suave: var(--c-tinta-suave);
+  --color-borde: var(--c-borde);
+  --color-borde-fuerte: var(--c-borde-fuerte);
+
+  --color-primario: var(--c-primario);
+  --color-primario-hover: var(--c-primario-hover);
+  --color-primario-active: var(--c-primario-active);
+  --color-primario-suave: var(--c-primario-suave);
+  --color-sobre-primario: var(--c-sobre-primario);
+
+  --color-acento: var(--c-acento);
+  --color-acento-suave: var(--c-acento-suave);
+  --color-sobre-acento: var(--c-sobre-acento);
+
+  --color-peligro: var(--c-peligro);
+  --color-peligro-suave: var(--c-peligro-suave);
+  --color-sobre-peligro: var(--c-sobre-peligro);
+
+  --font-titulo: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: Figtree, system-ui, sans-serif;
+
+  --radius-control: 0.5rem;
+  --radius-superficie: 0.75rem;
+
+  --shadow-menu: 0 4px 12px rgb(18 32 29 / 0.12);
+  --shadow-dialogo: 0 16px 40px rgb(18 32 29 / 0.2);
+}
+
+@layer base {
+  body {
+    @apply bg-fondo font-sans text-base text-tinta antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-titulo font-semibold tracking-tight;
+  }
+
+  /* Tailwind v4 quitó el cursor de mano en botones; lo devolvemos */
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* Un solo anillo de foco para toda la app, visible solo con teclado */
+  :focus-visible {
+    outline: 2px solid var(--c-primario);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

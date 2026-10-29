@@ -1,21 +1,69 @@
-import { Link } from "react-router-dom"
+import { Link, NavLink } from 'react-router-dom';
+import { Moon, Sun } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { useTema } from '../hooks/useTema';
+import Boton, { clasesBoton } from './ui/Boton';
 
-function Header(){
-    return(
-        
-        <nav className="flex justify-between items-center px-8 py-4 bg-white shadow-sm">
-            <h1>
-                Consulta Facil
-            </h1>
-            <div className=" flex gap-8 text-gray-500">
-                <Link to={"/"}>Inicio</Link>
-                <Link to={"/buscar"}>Buscar</Link>
-                <Link to={"/login"}>Iniciar Sesion</Link>
-            </div>
-                
+// NavLink pasa isActive: la página actual se marca sola
+const claseEnlace = ({ isActive }) =>
+  `rounded-control px-3 py-2 text-base font-medium transition-colors duration-150 ${
+    isActive
+      ? 'bg-primario-suave text-primario'
+      : 'text-tinta-suave hover:bg-borde/40 hover:text-tinta'
+  }`;
+
+function Header() {
+  const { usuario, logout } = useAuth();
+  const { oscuro, alternar } = useTema();
+
+  return (
+    <header className="border-b border-borde bg-superficie">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-3">
+        <Link
+          to="/"
+          className="rounded-control font-titulo text-xl font-semibold tracking-tight text-primario"
+        >
+          ConsultaFácil
+        </Link>
+
+        {/* En celular baja a una segunda fila (order-last) */}
+        <nav aria-label="Principal" className="order-last flex w-full gap-1 sm:order-none sm:w-auto">
+          <NavLink to="/buscar" className={claseEnlace}>
+            Buscar consultorio
+          </NavLink>
+          {/* Aquí se agregarán "Mis citas", "Agenda" y "Administrar" según el rol */}
         </nav>
-        
-    )
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={alternar}
+            aria-label={oscuro ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-control text-tinta-suave transition-colors duration-150 hover:bg-borde/40 hover:text-tinta"
+          >
+            {oscuro ? (
+              <Sun aria-hidden="true" className="h-5 w-5" />
+            ) : (
+              <Moon aria-hidden="true" className="h-5 w-5" />
+            )}
+          </button>
+
+          {usuario ? (
+            <>
+              <span className="hidden text-sm text-tinta-suave sm:inline">{usuario.nombre}</span>
+              <Boton variante="secundario" onClick={logout}>
+                Salir
+              </Boton>
+            </>
+          ) : (
+            <Link to="/login" className={clasesBoton('primario')}>
+              Ingresar
+            </Link>
+          )}
+        </div>
+      </div>
+    </header>
+  );
 }
 
-export default Header
+export default Header;
