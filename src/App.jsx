@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Registro from './pages/Registro';
 import Sistema from './pages/Sistema';
 import Consultorio from './pages/Consultorio';
+import MisCitas from './pages/MisCitas';
 import RutaProtegida from './components/RutaProtegida';  // se activa con la primera ruta protegida
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
 
         <Route element={<RutaProtegida />}>
           <Route path="/sistema" element={<Sistema />} />
+        </Route>
+
+        <Route element={<RutaProtegida roles={['PACIENTE']} />}>
+          <Route path="/mis-citas" element={<MisCitas />} />
         </Route>
 
         {/* Rutas solo para ADMIN:

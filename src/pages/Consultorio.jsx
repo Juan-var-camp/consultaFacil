@@ -60,11 +60,11 @@ function Consultorio() {
   const agendar = useMutation({
     mutationFn: agendarCita,
     onSuccess: () => {
-      toast.exito('Cita agendada');
-      setAConfirmar(null);
-      setMotivo('');
-      setParams({ fecha }, { replace: true });
-    },
+        toast.exito('Cita agendada');
+        setAConfirmar(null);
+        setMotivo('');
+        navigate('/mis-citas');
+        },
     // Con éxito o con error (por ejemplo, otro paciente tomó el horario) se actualizan los horarios
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['disponibilidad', id] });

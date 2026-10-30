@@ -31,7 +31,11 @@ function Header() {
           <NavLink to="/buscar" className={claseEnlace}>
             Buscar consultorio
           </NavLink>
-          {/* Aquí se agregarán "Mis citas", "Agenda" y "Administrar" según el rol */}
+          {usuario?.rol === 'PACIENTE' && (
+            <NavLink to="/mis-citas" className={claseEnlace}>
+              Mis citas
+            </NavLink>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
