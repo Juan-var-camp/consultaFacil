@@ -257,7 +257,11 @@ function Consultorio() {
         {disponibilidadQ.isSuccess && !hayLibres && (
           <EstadoVacio
             icono={CalendarX}
-            titulo="Sin horarios libres este día"
+            titulo={
+                horarios.length === 0
+                    ? 'El consultorio no atiende este día'
+                    : 'Sin horarios libres este día'
+                }
             descripcion="Prueba con otro día."
             accion={
               <Boton

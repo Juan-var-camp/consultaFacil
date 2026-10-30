@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Building2, MapPin, Phone, SearchX } from 'lucide-react';
 import { obtenerConsultorios } from '../api/consultorios';
@@ -26,8 +26,9 @@ function FilaSkeleton() {
 }
 
 function Buscar() {
-  const [texto, setTexto] = useState('');
-  const [especialidad, setEspecialidad] = useState('');
+  const [params] = useSearchParams();
+  const [texto, setTexto] = useState(params.get('q') ?? '');
+  const [especialidad, setEspecialidad] = useState(params.get('especialidad') ?? '');
 
   const {
     data: consultorios = [],
