@@ -17,7 +17,9 @@ export async function peticion(ruta, { method = 'GET', body } = {}) {
 
   const datos = await respuesta.json().catch(() => null);
   if (!respuesta.ok) {
-    throw new Error(datos?.error || 'Error en la petición');
+    const error = new Error(datos?.error || 'Error en la petición');
+    error.status = respuesta.status; // permite distinguir un 404 de otros fallos
+    throw error;
   }
   return datos;
 }

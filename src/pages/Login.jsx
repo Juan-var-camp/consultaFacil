@@ -69,7 +69,7 @@ function Login() {
 
       <p className="mt-6 text-center text-tinta-suave">
         ¿Primera vez aquí?{' '}
-        <Link to="/registro" className="font-medium text-primario underline underline-offset-2 hover:text-primario-hover">
+        <Link to="/registro" state={ubicacion.state} className="font-medium text-primario underline underline-offset-2 hover:text-primario-hover">
           Crea tu cuenta
         </Link>
       </p>

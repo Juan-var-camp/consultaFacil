@@ -1,12 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL;
+import { peticion } from './cliente';
 
-export async function obtenerConsultorios() {
-  const respuesta = await fetch(`${API_URL}/consultorios`);
-
-  // fetch NO lanza error con 404/500, hay que revisarlo a mano
-  if (!respuesta.ok) {
-    throw new Error('No se pudieron cargar los consultorios');
-  }
-
-  return respuesta.json();
-}
+export const obtenerConsultorios = () => peticion('/consultorios');
+export const obtenerConsultorio = (id) => peticion(`/consultorios/${id}`);
+export const obtenerDisponibilidad = (id, fecha) =>
+  peticion(`/consultorios/${id}/disponibilidad?fecha=${fecha}`);

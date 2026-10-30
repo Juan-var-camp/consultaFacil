@@ -5,6 +5,7 @@ import Buscar from './pages/Buscar';
 import Login from './pages/Login';
 import Registro from './pages/Registro';
 import Sistema from './pages/Sistema';
+import Consultorio from './pages/Consultorio';
 import RutaProtegida from './components/RutaProtegida';  // se activa con la primera ruta protegida
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/buscar" element={<Buscar />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
+        <Route path="/consultorios/:id" element={<Consultorio />} />
 
         <Route element={<RutaProtegida />}>
           <Route path="/sistema" element={<Sistema />} />

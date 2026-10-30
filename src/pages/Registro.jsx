@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Alerta from '../components/ui/Alerta';
 import Boton from '../components/ui/Boton';
@@ -21,6 +21,8 @@ function Registro() {
   const toast = useToast();
   const navigate = useNavigate();
   const [errorServidor, setErrorServidor] = useState('');
+  const ubicacion = useLocation();
+  const desde = ubicacion.state?.desde ?? '/buscar';
 
   const {
     register,
@@ -33,7 +35,7 @@ function Registro() {
     try {
       await registro({ ...datos, telefono: datos.telefono || undefined });
       toast.exito('Cuenta creada');
-      navigate('/buscar', { replace: true });
+      navigate(desde, { replace: true });
     } catch (error) {
       setErrorServidor(error.message);
     }
@@ -88,7 +90,7 @@ function Registro() {
 
       <p className="mt-6 text-center text-tinta-suave">
         ¿Ya tienes cuenta?{' '}
-        <Link to="/login" className="font-medium text-primario underline underline-offset-2 hover:text-primario-hover">
+        <Link to="/login" state={ubicacion.state} className="font-medium text-primario underline underline-offset-2 hover:text-primario-hover">
           Inicia sesión
         </Link>
       </p>
