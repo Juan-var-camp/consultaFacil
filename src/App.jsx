@@ -7,6 +7,8 @@ import Registro from './pages/Registro';
 import Sistema from './pages/Sistema';
 import Consultorio from './pages/Consultorio';
 import MisCitas from './pages/MisCitas';
+import Agenda from './pages/Agenda';
+import Horarios from './pages/Horarios';
 import RutaProtegida from './components/RutaProtegida';  // se activa con la primera ruta protegida
 
 function App() {
@@ -27,6 +29,11 @@ function App() {
 
         <Route element={<RutaProtegida roles={['PACIENTE']} />}>
           <Route path="/mis-citas" element={<MisCitas />} />
+        </Route>
+
+        <Route element={<RutaProtegida roles={['MEDICO']} />}>
+          <Route path="/agenda" element={<Agenda />} />
+          <Route path="/horarios" element={<Horarios />} />
         </Route>
 
         {/* Rutas solo para ADMIN:

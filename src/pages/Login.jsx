@@ -17,7 +17,7 @@ function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const ubicacion = useLocation();
-  const desde = ubicacion.state?.desde ?? '/buscar';
+  const desde = ubicacion.state?.desde; 
   const [errorServidor, setErrorServidor] = useState('');
 
   const {
@@ -29,8 +29,8 @@ function Login() {
   async function onSubmit(datos) {
     setErrorServidor('');
     try {
-      await login(datos);
-      navigate(desde, { replace: true });
+      const usuarioActual = await login(datos);
+      navigate(desde ?? (usuarioActual.rol === 'MEDICO' ? '/agenda' : '/buscar'), { replace: true });
     } catch (error) {
       setErrorServidor(error.message);
     }

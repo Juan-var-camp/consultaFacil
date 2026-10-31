@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, CalendarX, ChevronLeft, ChevronRight, MapPin, Phone, SearchX } from 'lucide-react';
-import { obtenerConsultorio, obtenerDisponibilidad } from '../api/consultorios';
+import { obtenerConsultorio, obtenerDisponibilidad, obtenerHorarios } from '../api/consultorios';
+import { resumirAtencion } from '../lib/atencion';
 import { agendarCita } from '../api/citas';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -49,6 +50,11 @@ function Consultorio() {
     queryKey: ['consultorio', id],
     queryFn: () => obtenerConsultorio(id),
     retry: (intentos, error) => ![400, 404].includes(error.status) && intentos < 1,
+  });
+
+  const horariosQ = useQuery({
+    queryKey: ['horarios', String(id)],
+    queryFn: () => obtenerHorarios(id),
   });
 
   const disponibilidadQ = useQuery({
@@ -183,6 +189,26 @@ function Consultorio() {
             </p>
             {consultorio.descripcion && (
               <p className="mt-4 max-w-prose text-tinta-suave">{consultorio.descripcion}</p>
+            )}
+
+            {/* Si falla la carga de los horarios, este bloque simplemente no aparece */}
+            {horariosQ.isPending && <Skeleton className="mt-5 h-4 w-2/3" />}
+            {horariosQ.isSuccess && (
+              <div className="mt-5">
+                <h2 className="text-lg">Días de atención</h2>
+                {resumirAtencion(horariosQ.data.franjas).length === 0 ? (
+                  <p className="mt-1 text-tinta-suave">Este consultorio aún no tiene horario configurado.</p>
+                ) : (
+                  <dl className="mt-2 space-y-1">
+                    {resumirAtencion(horariosQ.data.franjas).map((grupo) => (
+                      <div key={grupo.dias} className="flex flex-wrap gap-x-4">
+                        <dt className="w-44 font-medium">{grupo.dias}</dt>
+                        <dd className="text-tinta-suave">{grupo.texto}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+              </div>
             )}
           </>
         )}

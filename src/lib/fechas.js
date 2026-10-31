@@ -51,3 +51,8 @@ export function formatearFechaHora(iso) {
   const dia = new Intl.DateTimeFormat('en-CA', { timeZone: ZONA }).format(new Date(iso));
   return `${formatearDia(dia)}, ${formatearHora(iso)}`;
 }
+
+// ISO en UTC -> 'AAAA-MM-DD' del día en Colombia
+export function diaDe(iso) {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: ZONA }).format(new Date(iso));
+}

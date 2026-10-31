@@ -36,6 +36,16 @@ function Header() {
               Mis citas
             </NavLink>
           )}
+          {usuario?.rol === 'MEDICO' && (
+            <>
+              <NavLink to="/agenda" className={claseEnlace}>
+                Agenda
+              </NavLink>
+              <NavLink to="/horarios" className={claseEnlace}>
+                Horarios
+              </NavLink>
+            </>
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
