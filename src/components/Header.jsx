@@ -26,16 +26,21 @@ function Header() {
           ConsultaFácil
         </Link>
 
-        {/* En celular baja a una segunda fila (order-last) */}
-        <nav aria-label="Principal" className="order-last flex w-full gap-1 sm:order-none sm:w-auto">
+        {/* En celular baja a una segunda fila (order-last) y se desplaza si no cabe */}
+        <nav
+          aria-label="Principal"
+          className="order-last flex w-full gap-1 overflow-x-auto sm:order-none sm:w-auto sm:overflow-visible"
+        >
           <NavLink to="/buscar" className={claseEnlace}>
             Buscar consultorio
           </NavLink>
+
           {usuario?.rol === 'PACIENTE' && (
             <NavLink to="/mis-citas" className={claseEnlace}>
               Mis citas
             </NavLink>
           )}
+
           {usuario?.rol === 'MEDICO' && (
             <>
               <NavLink to="/agenda" className={claseEnlace}>
@@ -43,6 +48,20 @@ function Header() {
               </NavLink>
               <NavLink to="/horarios" className={claseEnlace}>
                 Horarios
+              </NavLink>
+            </>
+          )}
+
+          {usuario?.rol === 'ADMIN' && (
+            <>
+              <NavLink to="/admin/consultorios" className={claseEnlace}>
+                Consultorios
+              </NavLink>
+              <NavLink to="/admin/usuarios" className={claseEnlace}>
+                Usuarios
+              </NavLink>
+              <NavLink to="/admin/citas" className={claseEnlace}>
+                Citas
               </NavLink>
             </>
           )}

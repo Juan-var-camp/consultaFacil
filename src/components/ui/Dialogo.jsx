@@ -19,7 +19,7 @@ export default function Dialogo({ abierto, onCerrar, titulo, children }) {
         // Clic en el fondo oscuro (el propio <dialog>) cierra el diálogo
         if (evento.target === ref.current) onCerrar();
       }}
-      className="m-auto w-full max-w-md rounded-superficie border border-borde bg-superficie p-0 text-tinta shadow-dialogo backdrop:bg-tinta/50"
+      className="m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-md overflow-y-auto rounded-superficie border border-borde bg-superficie p-0 text-tinta shadow-dialogo backdrop:bg-tinta/50"
     >
       <div className="p-6">
         <h2 id={idTitulo} className="text-xl">

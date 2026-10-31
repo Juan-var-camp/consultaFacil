@@ -9,6 +9,9 @@ import Consultorio from './pages/Consultorio';
 import MisCitas from './pages/MisCitas';
 import Agenda from './pages/Agenda';
 import Horarios from './pages/Horarios';
+import AdminUsuarios from './pages/AdminUsuarios';
+import AdminConsultorios from './pages/AdminConsultorios';
+import AdminCitas from './pages/AdminCitas';
 import RutaProtegida from './components/RutaProtegida';  // se activa con la primera ruta protegida
 
 function App() {
@@ -34,6 +37,12 @@ function App() {
         <Route element={<RutaProtegida roles={['MEDICO']} />}>
           <Route path="/agenda" element={<Agenda />} />
           <Route path="/horarios" element={<Horarios />} />
+        </Route>
+
+        <Route element={<RutaProtegida roles={['ADMIN']} />}>
+          <Route path="/admin/consultorios" element={<AdminConsultorios />} />
+          <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+          <Route path="/admin/citas" element={<AdminCitas />} />
         </Route>
 
         {/* Rutas solo para ADMIN:

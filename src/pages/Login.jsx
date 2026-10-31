@@ -13,11 +13,18 @@ const esquema = z.object({
   password: z.string().min(1, 'Escribe tu contraseña'),
 });
 
+// A dónde llega cada rol si no venía de otra página
+const DESTINO_POR_ROL = {
+  PACIENTE: '/buscar',
+  MEDICO: '/agenda',
+  ADMIN: '/admin/consultorios',
+};
+
 function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const ubicacion = useLocation();
-  const desde = ubicacion.state?.desde; 
+  const desde = ubicacion.state?.desde; // página a la que quería entrar antes del login
   const [errorServidor, setErrorServidor] = useState('');
 
   const {
@@ -30,7 +37,7 @@ function Login() {
     setErrorServidor('');
     try {
       const usuarioActual = await login(datos);
-      navigate(desde ?? (usuarioActual.rol === 'MEDICO' ? '/agenda' : '/buscar'), { replace: true });
+      navigate(desde ?? DESTINO_POR_ROL[usuarioActual.rol] ?? '/buscar', { replace: true });
     } catch (error) {
       setErrorServidor(error.message);
     }
@@ -69,7 +76,11 @@ function Login() {
 
       <p className="mt-6 text-center text-tinta-suave">
         ¿Primera vez aquí?{' '}
-        <Link to="/registro" state={ubicacion.state} className="font-medium text-primario underline underline-offset-2 hover:text-primario-hover">
+        <Link
+          to="/registro"
+          state={ubicacion.state}
+          className="font-medium text-primario underline underline-offset-2 hover:text-primario-hover"
+        >
           Crea tu cuenta
         </Link>
       </p>

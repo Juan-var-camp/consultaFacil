@@ -7,3 +7,8 @@ export const obtenerDisponibilidad = (id, fecha) =>
 export const obtenerHorarios = (id) => peticion(`/consultorios/${id}/horarios`);
 export const guardarHorarios = (id, datos) =>
   peticion(`/consultorios/${id}/horarios`, { method: 'PUT', body: datos });
+export const crearConsultorio = (datos) =>
+  peticion('/consultorios', { method: 'POST', body: datos });
+export const actualizarConsultorio = (id, datos) =>
+  peticion(`/consultorios/${id}`, { method: 'PUT', body: datos });
+export const eliminarConsultorio = (id) => peticion(`/consultorios/${id}`, { method: 'DELETE' });
