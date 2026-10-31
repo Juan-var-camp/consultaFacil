@@ -16,10 +16,19 @@ export async function peticion(ruta, { method = 'GET', body } = {}) {
   if (respuesta.status === 204) return null;
 
   const datos = await respuesta.json().catch(() => null);
+
   if (!respuesta.ok) {
+    // Token vencido en una acción protegida: se cierra la sesión y se pide entrar de nuevo.
+    // Las rutas /auth/ se excluyen: ahí un 401 es una clave mala o una sesión que se está restaurando
+    if (respuesta.status === 401 && token && !ruta.startsWith('/auth/')) {
+      localStorage.removeItem(TOKEN_KEY);
+      window.location.assign('/login');
+    }
+
     const error = new Error(datos?.error || 'Error en la petición');
-    error.status = respuesta.status; // permite distinguir un 404 de otros fallos
+    error.status = respuesta.status;
     throw error;
   }
+
   return datos;
 }
